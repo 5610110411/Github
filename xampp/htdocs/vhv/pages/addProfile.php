@@ -1,19 +1,122 @@
 <?php
-  $TumbonArray    = array("บ่อผุด", "อ่างทอง", "หน้าเมือง", "ลิปะน้อย", "ตลิ่งงาม", "มะเร็ต", "แม่น้ำ");
-  $BloodTypeArray = array("เอ", "บี", "โอ", "เอบี");
-  $EducationArray = array("ประถมศึกษา", "มัธยมศึกษา", "ปริญญาตรี", "สูงกว่าปริญญาตรี");
+  $TumbonArray      = array("บ่อผุด", "อ่างทอง", "หน้าเมือง", "ลิปะน้อย", "ตลิ่งงาม", "มะเร็ต", "แม่น้ำ");
+  $BloodTypeArray   = array("เอ", "บี", "โอ", "เอบี");
+  $EducationArray   = array("ประถมศึกษา", "มัธยมศึกษา", "ปริญญาตรี", "สูงกว่าปริญญาตรี");
+  $InputByFormArray = array("IdCard", "Title", "FirstName", "LastName", 
+                            "Latitude", "Longitude", "Address", "Moo", 
+                            "Tumbon", "StartYear", "Education", 
+                            "Job", "BloodType", "VHV_No");
   
   $isInputErr = 0;
-  $nameErr = $emailErr = $genderErr = $websiteErr = "";
-  $name = $email = $gender = $comment = $website = "";
+  //$name = $email = $gender = $comment = $website = "";
 
-  if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    if (empty($_POST["FirstName"])) {
-      $nameErr = "Name is required";
+  /*
+  $IdCard = $Title = $FirstName = $LastName = ""; 
+  $Latitude = $Longitude = $Address = $Moo = "";
+  $Tumbon = $StartYear = $Education = "";
+  $Job = $BloodType = $VHV_No = "";
+  */
+
+  if($_SERVER["REQUEST_METHOD"] == "POST")
+  {
+    foreach ($InputByFormArray as $value)
+    {
+      if(empty($_POST[$value]))
+      {
+        $isInputErr = 1;
+      }
+      /*else
+      {
+        $value = test_input($_POST[$value]);
+
+        echo $value."/";
+      }
+      */
+    }
+    /*
+    c
+
+    if(empty($_POST["FirstName"]))
+    {
       $isInputErr = 1;
-    } else {
-      $name = test_input($_POST["FirstName"]);
-    } 
+    }else
+    {
+      $FirstName = test_input($_POST["FirstName"]);
+    }
+    
+    if(empty($_POST["LastName"]))
+    {
+      $isInputErr = 1;
+    }else
+    {
+      $LastName = test_input($_POST["LastName"]);
+    }
+
+    if(empty($_POST["Address"]))
+    {
+      $isInputErr = 1;
+    }else
+    {
+      $Address = test_input($_POST["Address"]);
+    }
+
+    if(empty($_POST["Moo"]))
+    {
+      $isInputErr = 1;
+    }else
+    {
+      $Moo = test_input($_POST["Moo"]);
+    }
+
+    if(empty($_POST["Tumbon"]))
+    {
+      $isInputErr = 1;
+    }else
+    {
+      $Tumbon = test_input($_POST["Tumbon"]);
+    }
+
+    if(empty($_POST["IdCard"]))
+    {
+      $isInputErr = 1;
+    }else
+    {
+      $IdCard = test_input($_POST["IdCard"]);
+    }
+
+    if(empty($_POST["VHV_No"]))
+    {
+      $isInputErr = 1;
+    }else
+    {
+      $VHV_No = test_input($_POST["VHV_No"]);
+    }
+
+    if(empty($_POST["IdCard"]))
+    {
+      $isInputErr = 1;
+    }else
+    {
+      $IdCard = test_input($_POST["IdCard"]);
+    }
+
+    if(empty($_POST["StartYear"]))
+    {
+      $isInputErr = 1;
+    }else
+    {
+      $StartYear = test_input($_POST["StartYear"]);
+    }
+
+    if(empty($_POST["BloodType"]))
+    {
+      $isInputErr = 1;
+    }else
+    {
+      $Tumbon = test_input($_POST["BloodType"]);
+    }
+    */
+
   }
 
   $action = isset($_GET['action']) ? $_GET['action'] : '';
@@ -24,10 +127,11 @@
 	case 'addProfile' :
     if($isInputErr == 0){
       addProfile();
-      echo "ho yes";
     }
     else{
-      echo "wow no";
+      echo"<script language=\"JavaScript\">";
+      echo"alert('กรุณากรอกข้อมูลให้ครบถ้วน')";
+      echo"</script>";
     }
     break;
   case 'form' :
@@ -54,7 +158,7 @@ function databaseQuery($sql)
 //$MooErr = "";
 function addProfile()
 {
-    $Title   	= $_POST['Title'];
+    $Title   	  = $_POST['Title'];
     $FirstName  = $_POST['FirstName'];
     $LastName   = $_POST['LastName'];
     $Address    = $_POST['Address'];
@@ -85,9 +189,16 @@ function addProfile()
     //echo $sql;
 
     $result = databaseQuery($sql);
+    echo "<script type='text/javascript'>alert('บันทึกข้อมูลเสร็จสิ้น');
+      window.location='home.php';
+      </script>";
+
+    //echo"<script language=\"JavaScript\">";
+    //echo"alert('บันทึกข้อมูลเสร็จสิ้น')";
+    // echo"</script>";
     
     //echo "save";
-    header("Location: home.php");
+    //header("Location: home.php");
 
 
 }
@@ -98,15 +209,6 @@ function test_input($data) {
   $data = htmlspecialchars($data);
   return $data;
 }
-  
-
-  
-	
-///////////////////////////////////////////////////////////////////////////
-// define variables and set to empty values
-
-//////////////////////////////////////////////////////////////
-
 ?>
 
 <!DOCTYPE html>
@@ -130,21 +232,9 @@ function test_input($data) {
       color: black;
     }
 
-    .error {color: #FF0000;}
   </style>
   <script type="text/javascript">
-
-  /*
-  function confSubmit(form) {
-    if (confirm("Are you sure you want to submit the form?")) {
-      form.submit();
-    }
-    else {
-      alert("You decided to not submit the form!");
-    }
-  }
-  */
-</script>
+  </script>
 
 </head>
 <body>
@@ -159,14 +249,13 @@ function test_input($data) {
     <div class='panel-body'>
       <!--form class='form-horizontal' role='form' action="process.php?action=addProfile" method="POST"-->
       <form class='form-horizontal' role='form' action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"])."?action=addProfile";?>" method="POST">
-      <?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>
         <div class='form-group'>
           <label class='control-label col-md-2 col-md-offset-2'>เลขประจำตัวประชาชน</label>
           <div class='col-md-6'>
             <div class='form-group'>
               <div class='col-md-11'>
                 <input class='form-control' name='IdCard' placeholder='เลขประจำตัวประชาชน' type='text'>
-              </div><span class="error">* <?php //echo $nameErr;?></span>
+              </div>
             </div>
           </div>
         </div>
@@ -177,7 +266,6 @@ function test_input($data) {
             <div class='col-md-2'>
               <div class='form-group internal'>
                 <select class='form-control' name='Title' required>
-                  <option value="<?php $Title?>"><?php $Title?></option>
                   <option value="" disabled selected>คำนำหน้า</option>
                   <option>นาย</option>
                   <option>นาง</option>
@@ -189,7 +277,7 @@ function test_input($data) {
               <div class='form-group internal'>
                 <input class='form-control' name='FirstName' placeholder='ชื่อ' type='text'>
               </div>
-            </div><span class="error">*<?php echo $nameErr;?>
+            </div>
             <div class='col-md-3 indent-small'>
               <div class='form-group internal'>
                 <input class='form-control' name='LastName' placeholder='นามสกุล' type='text'>
@@ -258,7 +346,7 @@ function test_input($data) {
                     } 
                   ?>
                 </select>
-              </div><span class="error">*
+              </div>
             </div>
             <div class='col-md-3 indent-small'>
               <div class='form-group internal'>
