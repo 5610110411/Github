@@ -6,7 +6,7 @@
       </div>
       <ul class='nav navbar-nav'>
         <li><a href='http://www.kohsamuicity.go.th/frontpage'>หน้าหลัก</a></li>
-        <li><a href='#'>ระบบ GIS อสม.</a></li>
+        <li><a href='home.php'>ระบบ GIS อสม.</a></li>
       </ul>
       <ul class='nav navbar-nav navbar-right'>
         <li><a href='logout.php'></span> ออกจากระบบ</a></li>

@@ -7,15 +7,7 @@
                             "Tumbon", "StartYear", "Education", 
                             "Job", "BloodType", "VHV_No");
   
-  $isInputErr = 0;
-  //$name = $email = $gender = $comment = $website = "";
-
-  /*
-  $IdCard = $Title = $FirstName = $LastName = ""; 
-  $Latitude = $Longitude = $Address = $Moo = "";
-  $Tumbon = $StartYear = $Education = "";
-  $Job = $BloodType = $VHV_No = "";
-  */
+  $isInputErr = 0; //Mark Error for server checking input.
 
   if($_SERVER["REQUEST_METHOD"] == "POST")
   {
@@ -25,103 +17,11 @@
       {
         $isInputErr = 1;
       }
-      /*else
-      {
-        $value = test_input($_POST[$value]);
-
-        echo $value."/";
-      }
-      */
     }
-    /*
-    c
-
-    if(empty($_POST["FirstName"]))
-    {
-      $isInputErr = 1;
-    }else
-    {
-      $FirstName = test_input($_POST["FirstName"]);
-    }
-    
-    if(empty($_POST["LastName"]))
-    {
-      $isInputErr = 1;
-    }else
-    {
-      $LastName = test_input($_POST["LastName"]);
-    }
-
-    if(empty($_POST["Address"]))
-    {
-      $isInputErr = 1;
-    }else
-    {
-      $Address = test_input($_POST["Address"]);
-    }
-
-    if(empty($_POST["Moo"]))
-    {
-      $isInputErr = 1;
-    }else
-    {
-      $Moo = test_input($_POST["Moo"]);
-    }
-
-    if(empty($_POST["Tumbon"]))
-    {
-      $isInputErr = 1;
-    }else
-    {
-      $Tumbon = test_input($_POST["Tumbon"]);
-    }
-
-    if(empty($_POST["IdCard"]))
-    {
-      $isInputErr = 1;
-    }else
-    {
-      $IdCard = test_input($_POST["IdCard"]);
-    }
-
-    if(empty($_POST["VHV_No"]))
-    {
-      $isInputErr = 1;
-    }else
-    {
-      $VHV_No = test_input($_POST["VHV_No"]);
-    }
-
-    if(empty($_POST["IdCard"]))
-    {
-      $isInputErr = 1;
-    }else
-    {
-      $IdCard = test_input($_POST["IdCard"]);
-    }
-
-    if(empty($_POST["StartYear"]))
-    {
-      $isInputErr = 1;
-    }else
-    {
-      $StartYear = test_input($_POST["StartYear"]);
-    }
-
-    if(empty($_POST["BloodType"]))
-    {
-      $isInputErr = 1;
-    }else
-    {
-      $Tumbon = test_input($_POST["BloodType"]);
-    }
-    */
-
   }
 
+  //Get action from user.
   $action = isset($_GET['action']) ? $_GET['action'] : '';
-
-
   switch ($action) {
 	
 	case 'addProfile' :
@@ -135,80 +35,121 @@
     }
     break;
   case 'form' :
-    //$FirstNameErr = $MooErr = "";
-    //header('Location: addProfile.php');
+    //move to main product page
 		break;
 		
 	default :
-	    // if action is not defined or unknown
+	  // if action is not defined or unknown
 		// move to main product page
 		header('Location: addProfile.php?action=form');
-}
-function databaseQuery($sql)
-{
-	include "../dblink.php";
-	//$link = mysqli_connect("localhost", "root", "", "wifi_regis") or die(mysqli_connect_error());
-	mysqli_query($link, "SET CHARACTER SET UTF8");
-	$result = mysqli_query($link, $sql);
-	//mysqli_close($link);
-	return $result;
-}
+  }
 
-//$FirstNameErr = "9898";
-//$MooErr = "";
-function addProfile()
-{
-    $Title   	  = $_POST['Title'];
-    $FirstName  = $_POST['FirstName'];
-    $LastName   = $_POST['LastName'];
-    $Address    = $_POST['Address'];
-    $Moo       	= $_POST['Moo'];
-    $Tumbon     = $_POST['Tumbon'];
-    $IdCard     = $_POST['IdCard'];
-    $VHV_No     = $_POST['VHV_No'];
-    $StartYear  = $_POST['StartYear'];
-    $BloodType  = $_POST['BloodType'];
-    $Birthday   = $_POST['Birthday'];
-    $Education  = $_POST['Education'];
-    $Job       	= $_POST['Job'];
-    $Latitude   = $_POST['Latitude'];
-    $Longitude  = $_POST['Longitude'];
+  function databaseQuery($sql)
+  {
+    include "../dblink.php";
+    //$link = mysqli_connect("localhost", "root", "", "wifi_regis") or die(mysqli_connect_error());
+    mysqli_query($link, "SET CHARACTER SET UTF8");
+    $result = mysqli_query($link, $sql);
+    //mysqli_close($link);
+    return $result;
+  }
+
+
+  function addProfile()
+  {
+    $Title   	  = test_input($_POST['Title']);
+    $FirstName  = test_input($_POST['FirstName']);
+    $LastName   = test_input($_POST['LastName']);
+    $Address    = test_input($_POST['Address']);
+    $Moo       	= test_input($_POST['Moo']);
+    $Tumbon     = test_input($_POST['Tumbon']);
+    $IdCard     = test_input($_POST['IdCard']);
+    $VHV_No     = test_input($_POST['VHV_No']);
+    $StartYear  = test_input($_POST['StartYear']);
+    $BloodType  = test_input($_POST['BloodType']);
+    $Education  = test_input($_POST['Education']);
+    $Job       	= test_input($_POST['Job']);
+    $Latitude   = test_input($_POST['Latitude']);
+    $Longitude  = test_input($_POST['Longitude']);
+    $day        = test_input($_POST['day']);
+    $month      = test_input($_POST['month']);
+    $year       = test_input($_POST['year']);
     
+    //Create Birthday Pattern
+    $Birthday   = createBirthdayPattern($day, $month, $year);
+    
+    //echo $Birthday;
+    //$year = intval($year); //convert String to Int
+    
+    /*
+    //intval($year);
+    $tmpYear = abs($year - 543);
+
+    if(abs(date("Y") - $tmpYear) < 150 ){
+      $year = $day."/".$month."/".$year;
+      echo $year;
+      echo "if case";
+    }else
+    {
+      echo "else case";
+      $year += 543;
+      echo $year;
+      //$year = strval($year);
+      $year = $day."/".$month."/".$year;
+      echo $year;
+    }
+    */
+    
+    
+    //$tmpYear = abs($year - 543);
+    
+    //echo abs(date("Y") - $tmpYear);
+  
     $sql   = "INSERT INTO `people`(`IdCard`, `Title`, `FirstName`, `LastName`, 
                 `Latitude`, `Longitude`, `Address`, `Moo`, 
                 `Tumbon`, `Birthday`, `StartYear`, `Education`, 
                 `Job`, `BloodType`, `VHV_No`, `Line_ID`, `Picture`) 
           VALUES ('$IdCard','$Title','$FirstName','$LastName',
               '$Latitude','$Longitude','$Address','$Moo',
-              '$Tumbon','12/04/2018','$StartYear','$Education',
+              '$Tumbon','$Birthday','$StartYear','$Education',
               '$Job','$BloodType','$VHV_No','','')";
-    /*
-    $sql   = "INSERT INTO wifi (FirstName, LastName)
-              VALUES ('$firstname', '$lastname')";
-    */
-    //echo $sql;
-
-    $result = databaseQuery($sql);
-    echo "<script type='text/javascript'>alert('บันทึกข้อมูลเสร็จสิ้น');
-      window.location='home.php';
-      </script>";
-
-    //echo"<script language=\"JavaScript\">";
-    //echo"alert('บันทึกข้อมูลเสร็จสิ้น')";
-    // echo"</script>";
     
-    //echo "save";
-    //header("Location: home.php");
+    
+    $result = databaseQuery($sql);
+    
+    echo "<script type='text/javascript'>
+            alert('บันทึกข้อมูลเสร็จสิ้น');
+            window.location='home.php';
+          </script>";
+  
+  }
 
+  function test_input($data)
+  {
+    $data = trim($data);
+    $data = htmlspecialchars($data);//Convert special characters to HTML entities
+    return $data;
+  }
 
-}
+  function createBirthdayPattern($day, $month, $year)
+  {
+    $Birthday = "";
+    $year = convertToValidYear($year);
+    $Birthday = $day."/".$month."/".$year;
+    return $Birthday;
+  }
 
-function test_input($data) {
-  $data = trim($data);
-  $data = stripslashes($data);
-  $data = htmlspecialchars($data);
-  return $data;
-}
+  function convertToValidYear($year)
+  {
+    $tmpYear = abs($year - 543);
+    if(abs(date("Y") - $tmpYear) < 150 ){
+      return $year;
+    }else
+    {
+      $year += 543;
+    }
+    return $year;
+  }
 ?>
 
 <!DOCTYPE html>
@@ -254,7 +195,7 @@ function test_input($data) {
           <div class='col-md-6'>
             <div class='form-group'>
               <div class='col-md-11'>
-                <input class='form-control' name='IdCard' placeholder='เลขประจำตัวประชาชน' type='text'>
+                <input class='form-control' name='IdCard' placeholder='เลขประจำตัวประชาชน (13หลัก)' type='text' required>
               </div>
             </div>
           </div>
@@ -275,12 +216,12 @@ function test_input($data) {
             </div>
             <div class='col-md-3 indent-small'>
               <div class='form-group internal'>
-                <input class='form-control' name='FirstName' placeholder='ชื่อ' type='text'>
+                <input class='form-control' name='FirstName' placeholder='ชื่อ' type='text' required>
               </div>
             </div>
             <div class='col-md-3 indent-small'>
               <div class='form-group internal'>
-                <input class='form-control' name='LastName' placeholder='นามสกุล' type='text'>
+                <input class='form-control' name='LastName' placeholder='นามสกุล' type='text' required>
               </div>
             </div>
           </div>
@@ -291,7 +232,7 @@ function test_input($data) {
           <div class='col-md-8'>
             <div class='col-md-2'>
               <div class='form-group internal'>
-                <select class='form-control' id='day' required>
+                <select class='form-control' name='day' required>
                   <option value="" disabled selected>วันที่</option>
                   <?php 
                     for ($i = 1; $i <= 31; $i++) {
@@ -303,7 +244,7 @@ function test_input($data) {
             </div>
             <div class='col-md-3 indent-small'>
               <div class='form-group internal'>
-                <select class='form-control' id='month' required>
+                <select class='form-control' name='month' required>
                   <option value="" disabled selected>เดือน</option>
                   <option value="1">มกราคม</option>
                   <option value="2">กุมภาพันธ์</option>
@@ -322,7 +263,7 @@ function test_input($data) {
             </div>
             <div class='col-md-3 indent-small'>
               <div class='form-group internal'>
-                <input class='form-control' name='Birthday' placeholder='พ.ศ.' type='number'>
+                <input class='form-control' name='year' placeholder='ปี พ.ศ.' type='number' required>
               </div>
             </div>
           </div>
@@ -368,7 +309,7 @@ function test_input($data) {
           <div class='col-md-6'>
             <div class='form-group'>
               <div class='col-md-11'>
-                <input class='form-control' name='VHV_No' placeholder='เลขที่บัตร อสม.' type='text'>
+                <input class='form-control' name='VHV_No' placeholder='เลขที่บัตร อสม. (14 หลัก)' type='text' required>
               </div>
             </div>
           </div>
@@ -379,7 +320,7 @@ function test_input($data) {
           <div class='col-md-6'>
             <div class='form-group'>
               <div class='col-md-11'>
-                <input class='form-control' name='StartYear' placeholder='ปีที่ได้รับการแต่งตั้งเป็น อสม.' type='text'>
+                <input class='form-control' name='StartYear' placeholder='ปี พ.ศ.' type='text'>
               </div>
             </div>
           </div>
@@ -442,7 +383,7 @@ function test_input($data) {
             </div>
             <div class='form-group internal'>
               <div class='col-md-11'>
-                <input class='form-control' name='Tel' placeholder='โทร: (xxx) - xxx xxxx' type='text'>
+                <input class='form-control' name='Tel' placeholder='เช่น 0979999999' type='text'>
               </div>
             </div>
           </div>
@@ -453,13 +394,13 @@ function test_input($data) {
           <div class='col-md-8'>
             <div class='col-md-3'>
               <div class='form-group internal input-group'>
-                <input class='form-control' name='Latitude' placeholder='ละติจูด' type='text'>
+                <input class='form-control' name='Latitude' placeholder='เช่น 9.5000' type='number' required>
               </div>
             </div>
             <label class='control-label col-md-2'>ลองจิจูด</label>
             <div class='col-md-3'>
               <div class='form-group internal input-group'>
-                <input class='form-control' name='Longitude' placeholder='ลองจิจูด' type='text'>
+                <input class='form-control' name='Longitude' placeholder='เช่น 99.9500' type='number' required>
               </div>
             </div>
           </div>

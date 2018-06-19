@@ -141,10 +141,20 @@ if(!isset($_SESSION['ses_id'])){
 
 <style>
 	
-	#map{
+	#map
+	{
       height:450px;
       width:100%;
-    }
+	}
+	
+	.panel-footer {
+		padding: 10px 15px;
+		background-color: #f5f5f5;
+		border-top: 1px solid #dddddd;
+		border-bottom-right-radius: 2px;
+		border-bottom-left-radius: 2px;
+		width:100%;
+	}
 
 	h1
 	{
@@ -178,16 +188,19 @@ body{
 
 </head>
 <body>
-<script>
-					var person = {};
-					var firstname = {};
-					var lastname = {};
-					var lat = {};
-					var long = {};
-					var number = 0;
-</script>
-<nav class="navbar navbar-inverse">
-  <div class="container-fluid">
+	<script>
+		var person = {};
+		var firstname = {};
+		var lastname = {};
+		var lat = {};
+		var long = {};
+		var number = 0;
+	</script>
+
+<!--  =================== Top bar============================================   -->
+<?php include('topbar.php'); ?>
+<!--nav class="navbar navbar-default">
+  <div class="container">
     <div class="navbar-header">
       <a class="navbar-brand" href="http://www.kohsamuicity.go.th/frontpage">เทศบาลนครเกาะสมุย</a>
     </div>
@@ -197,246 +210,254 @@ body{
     </ul>
     <ul class="nav navbar-nav navbar-right">
       <!--li><a href="#"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li-->
-      <li><a href="logout.php"><span class="glyphicon glyphicon-log-in"></span> ออกจากระบบ</a></li>
+      <!--li><a href="logout.php"><span class="glyphicon glyphicon-log-in"></span> ออกจากระบบ</a></li>
     </ul>
   </div>
-</nav>
-<div class="container">
-<h1 align="center">ระบบสารสนเทศภูมิศาสตร์ อสม. อำเภอเกาะสมุย</h1>
+</nav-->
+
 	<div class="container">
-        <div class="row centered-form">
-            <div class="col-xs-12 col-sm-8 col-md-4 col-sm-offset-2 col-md-offset-4">
-                <div class="panel panel-default">
-					<div class="panel-heading">
-                        <h3 class="panel-title text-center">ค้นหาข้อมูล อสม.</h3>
-                    </div>
-                    <div class="panel-body">
-                        <form action="home.php" method="post">
-							<div class="form-group">
-                                <input type="text" name="IdCard" class="form-control input-sm" placeholder="เลขประจำตัวประชาชน">
-                            </div>
-							<div class="row">
-                                <div class="col-xs-6 col-sm-6 col-md-6">
-                                    <div class="form-group">
-                                        <input type="text" name="FirstName" class="form-control input-sm" placeholder="ชื่อ">
-                                    </div>
-                                </div>
-                                <div class="col-xs-6 col-sm-6 col-md-6">
-                                    <div class="form-group">
-                                        <input type="text" name="LastName" class="form-control input-sm" placeholder="นามสกุล">
-                                    </div>
-                                </div>
-                            </div>
-							<div class="row">
-                                <div class="col-xs-6 col-sm-6 col-md-6">
-                                    <div class="form-group">
-																			<select name="Tumbon" class="form-control form-control-option input-sm">
-																				<option value="111" disabled selected hidden>ตำบล</option>
-																				<option value="ตลิ่งงาม">ตลิ่งงาม</option>
-																				<option value="บ่อผุด">บ่อผุด</option>
-																				<option value="อ่างทอง">อ่างทอง</option>
-																				<option value="หน้าเมือง">หน้าเมือง</option>
-																				<option value="ลิปะน้อย">ลิปะน้อย</option>
-																				<option value="แม่น้ำ">แม่น้ำ</option>
-																				<option value="มะเร็ต">มะเร็ต</option>
-																			</select>
-                                    </div>
-                                </div>
-                                <div class="col-xs-6 col-sm-6 col-md-6">
-                                    <div class="form-group">
-																		<select name="Moo" class="form-control form-control-option input-sm">
-																				<option value="111" disabled selected hidden>หมู่ที่</option>
-																				<option value="1">1</option>
-																				<option value="2">2</option>
-																				<option value="3">3</option>
-																				<option value="4">4</option>
-																				<option value="5">5</option>
-																				<option value="6">6</option>
-																			</select>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <input type="text" name="VHV_No" class="form-control input-sm" placeholder="เลขที่บัตร อสม.">
-                            </div>
-						
-							<button type="submit" name="search" class="btn btn-info btn-block">
-        						<span class="glyphicon glyphicon-search"></span>  ค้นหา
-      						</button>
-                    
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-		<form method="get" action="../pages/addProfile.php">
-			<button class="btn btn-default" style="float:right">
-				<span class="glyphicon glyphicon-plus"></span>  เพิ่มข้อมูล
-			</button>
-		</form>
-
-	<form method="get" action="../pages/profile.php">
-			
-				<?php 
-					if(mysqli_num_rows($search_result) == 0 && mysqli_num_rows($search_resultForMap) == 0 && $_SESSION['firstSearch'] == 0)
-					{
-						echo '<div class="col-xs-12 col-sm-8 col-md-4 col-sm-offset-2 col-md-offset-5">- กรุณากรอกข้อมูลเพื่อค้นหา -</div>';
-					}
-					else if(mysqli_num_rows($search_result) == 0 && mysqli_num_rows($search_resultForMap) == 0)
-					{
-						echo '<div class="col-xs-12 col-sm-8 col-md-4 col-sm-offset-2 col-md-offset-5">- ไม่พบข้อมูลที่ค้นหา -</div>';
-					}
-					else
-					{?>
-					<table class="table table-striped table-responsive-md btn-table">
-						<?php echo "ข้อมูลลำดับที่: " . page_start_row() . " - " . page_stop_row() . " จากทั้งหมด: " . page_total_rows(); ?>
-						<tr>
-							<th><?php echo 'เลขที่บัตร อสม.';?></th>
-							<th><?php echo 'คำนำหน้า';?></th>
-							<th><?php echo 'ชื่อ';?></th>
-							<th><?php echo 'นามสกุล';?></th>
-							<th><?php echo 'ตำบล';?></th>
-							<th><?php echo 'หมู่';?></th>
-							<th><?php echo 'ข้อมูลเพิ่มเติม';?></th>
-						</tr>
-            <?php while($row = mysqli_fetch_array($search_result)):?>			
-							<tr>
-								<td><?php echo $row['VHV_No'];?></td>
-								<td><?php echo $row['Title'];?></td>
-								<td><?php echo $row['FirstName'];?></td>
-								<td><?php echo $row['LastName'];?></td>
-								<td><?php echo $row['Tumbon'];?></td>
-								<td><?php echo $row['Moo'];?></td>
-								<td>
-									<button data-id="p<?php echo $row['VHV_No'];?>" class="btn btn-default" type="submit" name="regName" value="<?php echo $row['VHV_No'];?>">รายละเอียด</button>
-								</td>
-							</tr>
-            <?php endwhile;?>
-					<?php } //end of else?>
-          </table>
-						
-					<?php while($row = mysqli_fetch_array($search_resultForMap)):?>			
-						<script>
-							person[number] = <?php echo $row['VHV_No'];?>;
-							firstname[number] = "<?php echo $row['FirstName'];?>";
-							lastname[number] = "<?php echo $row['LastName'];?>";
-							lat[number] = <?php echo $row['Latitude'];?>;
-							long[number] = <?php echo $row['Longitude'];?>;
-							number++;
-						</script>
-					<?php endwhile;?>
-
-			<div align="center">
-				<?php
-					page_echo_pagenums(6, true);
-				?>
+		<h1 align="center">ระบบสารสนเทศภูมิศาสตร์ อสม. อำเภอเกาะสมุย</h1>
+		<div class="container">
+			<div class="row centered-form">
+					<div class="col-xs-12 col-sm-8 col-md-4 col-sm-offset-2 col-md-offset-4">
+						<div class="panel panel-default">
+							<div class="panel-heading">
+									<h3 class="panel-title text-center">ค้นหาข้อมูล อสม.</h3>
+							</div>
+							<div class="panel-body">
+								<form action="home.php" method="post">
+									<div class="form-group">
+										<input type="text" name="IdCard" class="form-control input-sm" placeholder="เลขประจำตัวประชาชน">
+									</div>
+									<div class="row">
+										<div class="col-xs-6 col-sm-6 col-md-6">
+												<div class="form-group">
+														<input type="text" name="FirstName" class="form-control input-sm" placeholder="ชื่อ">
+												</div>
+										</div>
+										<div class="col-xs-6 col-sm-6 col-md-6">
+												<div class="form-group">
+														<input type="text" name="LastName" class="form-control input-sm" placeholder="นามสกุล">
+												</div>
+										</div>
+									</div>
+									<div class="row">
+																	<div class="col-xs-6 col-sm-6 col-md-6">
+																			<div class="form-group">
+																				<select name="Tumbon" class="form-control form-control-option input-sm">
+																					<option value="111" disabled selected hidden>ตำบล</option>
+																					<option value="ตลิ่งงาม">ตลิ่งงาม</option>
+																					<option value="บ่อผุด">บ่อผุด</option>
+																					<option value="อ่างทอง">อ่างทอง</option>
+																					<option value="หน้าเมือง">หน้าเมือง</option>
+																					<option value="ลิปะน้อย">ลิปะน้อย</option>
+																					<option value="แม่น้ำ">แม่น้ำ</option>
+																					<option value="มะเร็ต">มะเร็ต</option>
+																				</select>
+																			</div>
+																	</div>
+																	<div class="col-xs-6 col-sm-6 col-md-6">
+																			<div class="form-group">
+																				<select name="Moo" class="form-control form-control-option input-sm">
+																					<option value="111" disabled selected hidden>หมู่ที่</option>
+																					<option value="1">1</option>
+																					<option value="2">2</option>
+																					<option value="3">3</option>
+																					<option value="4">4</option>
+																					<option value="5">5</option>
+																					<option value="6">6</option>
+																				</select>
+																			</div>
+																	</div>
+															</div>
+															<div class="form-group">
+																	<input type="text" name="VHV_No" class="form-control input-sm" placeholder="เลขที่บัตร อสม.">
+															</div>
+							
+										<button type="submit" name="search" class="btn btn-info btn-block">
+											<span class="glyphicon glyphicon-search"></span>  ค้นหา
+										</button>
+											
+													</form>
+											</div>
+									</div>
+								</form>
+							</div>
+					</div>
 			</div>
-			
+			<form method="get" action="../pages/addProfile.php">
+				<button class="btn btn-default" style="float:right">
+					<span class="glyphicon glyphicon-plus"></span>  เพิ่มข้อมูล
+				</button>
+			</form>
+
+			<form method="get" action="../pages/profile.php">
+				
+					<?php 
+						if(mysqli_num_rows($search_result) == 0 && mysqli_num_rows($search_resultForMap) == 0 && $_SESSION['firstSearch'] == 0)
+						{
+							echo '<div class="col-xs-12 col-sm-8 col-md-4 col-sm-offset-2 col-md-offset-5">- กรุณากรอกข้อมูลเพื่อค้นหา -</div>';
+						}
+						else if(mysqli_num_rows($search_result) == 0 && mysqli_num_rows($search_resultForMap) == 0)
+						{
+							echo '<div class="col-xs-12 col-sm-8 col-md-4 col-sm-offset-2 col-md-offset-5">- ไม่พบข้อมูลที่ค้นหา -</div>';
+						}
+						else
+						{?>
+						<table class="table table-striped table-responsive-md btn-table">
+							<?php echo "ข้อมูลลำดับที่: " . page_start_row() . " - " . page_stop_row() . " จากทั้งหมด: " . page_total_rows(); ?>
+							<tr>
+								<th><?php echo 'เลขที่บัตร อสม.';?></th>
+								<th><?php echo 'คำนำหน้า';?></th>
+								<th><?php echo 'ชื่อ';?></th>
+								<th><?php echo 'นามสกุล';?></th>
+								<th><?php echo 'ตำบล';?></th>
+								<th><?php echo 'หมู่';?></th>
+								<th><?php echo 'ข้อมูลเพิ่มเติม';?></th>
+							</tr>
+							<?php while($row = mysqli_fetch_array($search_result)):?>			
+								<tr>
+									<td><?php echo $row['VHV_No'];?></td>
+									<td><?php echo $row['Title'];?></td>
+									<td><?php echo $row['FirstName'];?></td>
+									<td><?php echo $row['LastName'];?></td>
+									<td><?php echo $row['Tumbon'];?></td>
+									<td><?php echo $row['Moo'];?></td>
+									<td>
+										<button data-id="p<?php echo $row['VHV_No'];?>" class="btn btn-default" type="submit" name="regName" value="<?php echo $row['VHV_No'];?>">รายละเอียด</button>
+									</td>
+								</tr>
+							<?php endwhile;?>
+						<?php } //end of else?>
+						</table>
+							
+						<?php while($row = mysqli_fetch_array($search_resultForMap)):?>			
+							<script>
+								person[number] = <?php echo $row['VHV_No'];?>;
+								firstname[number] = "<?php echo $row['FirstName'];?>";
+								lastname[number] = "<?php echo $row['LastName'];?>";
+								lat[number] = <?php echo $row['Latitude'];?>;
+								long[number] = <?php echo $row['Longitude'];?>;
+								number++;
+							</script>
+						<?php endwhile;?>
+
+				<div align="center">
+					<?php
+						page_echo_pagenums(6, true);
+					?>
+				</div>
+				
 				<div>
 					<div id="map"></div>
 				</div>
-			
-		</form>
-  <script>
-		/*
-		for(count = 0 ; count <= i; count++){
-			console.log(count)
-			console.log(person[count]);
-			console.log(firstname[count]);
-			console.log(lat[count]);
-			console.log(long[count]);
-			console.log("------------");
-		}
-		*/
+				
+			</form>
+		
+			<script>
+				/*
+				for(count = 0 ; count <= i; count++){
+					console.log(count)
+					console.log(person[count]);
+					console.log(firstname[count]);
+					console.log(lat[count]);
+					console.log(long[count]);
+					console.log("------------");
+				}
+				*/
 
-		// Array of markers
-		var markers = [];
-		var coords = [];
-		for (var count = 0; count < number; count++) {
-			markers[count] = {
-				coords: {
-					lat: lat[count],
-					lng: long[count]
-				},
-				content: '<h1>' + firstname[count] + ' ' + lastname[count] + '</h1>'
-			};
-		}
-		//console.log(markers);
+				// Array of markers
+				var markers = [];
+				var coords = [];
+				for (var count = 0; count < number; count++) {
+					markers[count] = {
+						coords: {
+							lat: lat[count],
+							lng: long[count]
+						},
+						content: '<h1>' + firstname[count] + ' ' + lastname[count] + '</h1>'
+					};
+				}
+				//console.log(markers);
 
-    function initMap(){
-      // Map options
-      var options = {
-        zoom:11,
-        center:{lat:9.5159098,lng:100.0016761}
-      }
+				function initMap(){
+					// Map options
+					var options = {
+						zoom:11,
+						center:{lat:9.5159098,lng:100.0016761}
+					}
 
-      // New map
-      var map = new google.maps.Map(document.getElementById('map'), options);
+					// New map
+					var map = new google.maps.Map(document.getElementById('map'), options);
 
-      // Listen for click on map
-      /*
-			google.maps.event.addListener(map, 'click', function(event){
-        // Add marker
-        addMarker({coords:event.latLng});
-      });
-			*/
+					// Listen for click on map
+					/*
+					google.maps.event.addListener(map, 'click', function(event){
+						// Add marker
+						addMarker({coords:event.latLng});
+					});
+					*/
 
-      /*
-      // Add marker
-      var marker = new google.maps.Marker({
-        position:{lat:42.4668,lng:-70.9495},
-        map:map,
-        icon:'https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png'
-      });
+					/*
+					// Add marker
+					var marker = new google.maps.Marker({
+						position:{lat:42.4668,lng:-70.9495},
+						map:map,
+						icon:'https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png'
+					});
 
-      var infoWindow = new google.maps.InfoWindow({
-        content:'<h1>Lynn MA</h1>'
-      });
+					var infoWindow = new google.maps.InfoWindow({
+						content:'<h1>Lynn MA</h1>'
+					});
 
-      marker.addListener('click', function(){
-        infoWindow.open(map, marker);
-      });
-      */
+					marker.addListener('click', function(){
+						infoWindow.open(map, marker);
+					});
+					*/
 
-      // Loop through markers
-      for(var i = 0;i < markers.length;i++){
-        // Add marker
-        addMarker(markers[i]);
-      }
+					// Loop through markers
+					for(var i = 0;i < markers.length;i++){
+						// Add marker
+						addMarker(markers[i]);
+					}
 
-      // Add Marker Function
-      function addMarker(props){
-        var marker = new google.maps.Marker({
-          position:props.coords,
-          map:map,
-          //icon:props.iconImage
-        });
+					// Add Marker Function
+					function addMarker(props){
+						var marker = new google.maps.Marker({
+							position:props.coords,
+							map:map,
+							//icon:props.iconImage
+						});
 
-        // Check for customer icon
-        if(props.iconImage){
-          // Set icon image
-          marker.setIcon(props.iconImage);
-        }
+						// Check for customer icon
+						if(props.iconImage){
+							// Set icon image
+							marker.setIcon(props.iconImage);
+						}
 
-        // Check content
-        if(props.content){
-          var infoWindow = new google.maps.InfoWindow({
-            content:props.content
-          });
+						// Check content
+						if(props.content){
+							var infoWindow = new google.maps.InfoWindow({
+								content:props.content
+							});
 
-          marker.addListener('click', function(){
-            infoWindow.open(map, marker);
-          });
-        }
-      }
-    }
-  </script>
-  <script async defer
-    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC4A_oI1Apm1v0b2jKI4T3RBLqHU0q3Xk4&callback=initMap">
-  </script>
+							marker.addListener('click', function(){
+								infoWindow.open(map, marker);
+							});
+						}
+					}
+				}
+			</script>
+			<script async defer
+				src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC4A_oI1Apm1v0b2jKI4T3RBLqHU0q3Xk4&callback=initMap">
+			</script>
+		</div>
+		<br>
+		<?php include('footer.php');?>
+	</div>
 </body>
 </html>
 <?php
 	}
 ?>
+
