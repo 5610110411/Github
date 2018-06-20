@@ -7,10 +7,6 @@
   
   $regValue = $_GET['regName'];
 
-
-
-
-
   //echo "Your registration is: ".$regValue.".";
   $sql = createQuery($regValue);
 	$search_result = filterTable($sql);
@@ -31,8 +27,6 @@
     mysqli_close($link);
 		return $filter_Result;
 	}
-
-
 ?>
 
 <!DOCTYPE html>

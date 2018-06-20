@@ -6,6 +6,11 @@
                             "Latitude", "Longitude", "Address", "Moo", 
                             "Tumbon", "StartYear", "Education", 
                             "Job", "BloodType", "VHV_No");
+  $minYear          = (date("Y") + 543) - 150;
+  $maxYear          = (date("Y") + 543) + 150;
+  echo $minYear."/";
+  echo $maxYear;
+
   
   $isInputErr = 0; //Mark Error for server checking input.
 
@@ -159,6 +164,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <!--link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"-->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
   <link rel="stylesheet" href="../css/bootstrapPaper.css">
   <title>เพิ่มข้อมูล อสม.</title>
   <style>
@@ -195,7 +201,7 @@
           <div class='col-md-6'>
             <div class='form-group'>
               <div class='col-md-11'>
-                <input class='form-control' name='IdCard' placeholder='เลขประจำตัวประชาชน (13หลัก)' type='text' required>
+                <input class='form-control' name='IdCard' placeholder='เลขประจำตัวประชาชน (13หลัก)' type='number' min="0000000000001" max="9999999999999" required>
               </div>
             </div>
           </div>
@@ -263,7 +269,7 @@
             </div>
             <div class='col-md-3 indent-small'>
               <div class='form-group internal'>
-                <input class='form-control' name='year' placeholder='ปี พ.ศ.' type='number' required>
+                <input class='form-control' name='year' placeholder='ปี พ.ศ.' type='number' min="<?php echo $minYear; ?>" max="<?php echo $maxYear; ?>" required>
               </div>
             </div>
           </div>
@@ -309,7 +315,7 @@
           <div class='col-md-6'>
             <div class='form-group'>
               <div class='col-md-11'>
-                <input class='form-control' name='VHV_No' placeholder='เลขที่บัตร อสม. (14 หลัก)' type='text' required>
+                <input class='form-control' name='VHV_No' placeholder='เลขที่บัตร อสม. (14 หลัก)' type='number' min="00000000000001" max="99999999999999" required>
               </div>
             </div>
           </div>
@@ -320,7 +326,7 @@
           <div class='col-md-6'>
             <div class='form-group'>
               <div class='col-md-11'>
-                <input class='form-control' name='StartYear' placeholder='ปี พ.ศ.' type='text'>
+                <input class='form-control' name='StartYear' placeholder='ปี พ.ศ.' type='number' min="<?php echo $minYear; ?>" max="<?php echo $maxYear; ?>">
               </div>
             </div>
           </div>
@@ -383,7 +389,7 @@
             </div>
             <div class='form-group internal'>
               <div class='col-md-11'>
-                <input class='form-control' name='Tel' placeholder='เช่น 0979999999' type='text'>
+                <input class='form-control' name='Tel' placeholder='เบอร์โทรศัพท์ เช่น 0979999999' type='number' min="0" max="9999999999">
               </div>
             </div>
           </div>
@@ -394,13 +400,13 @@
           <div class='col-md-8'>
             <div class='col-md-3'>
               <div class='form-group internal input-group'>
-                <input class='form-control' name='Latitude' placeholder='เช่น 9.5000' type='number' required>
+                <input class='form-control' name='Latitude' placeholder='เช่น 9.5000' type='number' step="0.0000001" min="0.0000001" max="999" required>
               </div>
             </div>
             <label class='control-label col-md-2'>ลองจิจูด</label>
             <div class='col-md-3'>
               <div class='form-group internal input-group'>
-                <input class='form-control' name='Longitude' placeholder='เช่น 99.9500' type='number' required>
+                <input class='form-control' name='Longitude' placeholder='เช่น 99.9500' type='number' step="0.0000001" min="0.0000001" max="999" required>
               </div>
             </div>
           </div>
@@ -408,12 +414,12 @@
 
         <div class='form-group'>
           <div class='col-xs-12 col-sm-6 col-md-6'>
-            <!--button class='btn-lg btn-primary'class="btn btn-primary">บันทึกข้อมูล</button-->
-            <input class="btn btn-lg btn-success pull-right" type="submit" value="บันทึกข้อมูล"-->
+            <button class="btn btn-lg btn-success pull-right" type="submit"><span class='glyphicon glyphicon-floppy-saved'></span> บันทึกข้อมูล</button-->
+            <!--input class="btn btn-lg btn-success pull-right" type="submit" value="บันทึกข้อมูล"></input-->
   
           </div>
           <div class='col-xs-12 col-sm-6 col-md-6 pull-left'>
-            <a href="home.php" class="btn btn-lg btn-danger pull-right">ยกเลิก</a>
+            <a href="home.php" class="btn btn-lg btn-danger pull-right"><span class='glyphicon glyphicon-floppy-remove'></span> ยกเลิก</a>
           </div>
         </div>
       </form>

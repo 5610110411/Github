@@ -10,7 +10,7 @@
       </div>
       <div class='col-xs-4 col-sm-4 col-md-4'>
         <ul class='list-unstyled'>
-          <li class='pull-right'><a href='#top'>Back to top</a></li>
+          <li class='pull-right'><a href='#top'><span class='glyphicon glyphicon-menu-up'></span> Back to top</a></li>
         </ul>
       </div>
     </div>

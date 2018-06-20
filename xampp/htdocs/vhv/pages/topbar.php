@@ -9,7 +9,7 @@
         <li><a href='home.php'>ระบบ GIS อสม.</a></li>
       </ul>
       <ul class='nav navbar-nav navbar-right'>
-        <li><a href='logout.php'></span> ออกจากระบบ</a></li>
+        <li><a href='logout.php'><span class='glyphicon glyphicon-log-out'></span> ออกจากระบบ</a></li>
       </ul>
     </div>
   </nav>
