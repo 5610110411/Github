@@ -8,9 +8,6 @@
                             "Job", "BloodType", "VHV_No");
   $minYear          = (date("Y") + 543) - 150;
   $maxYear          = (date("Y") + 543) + 150;
-  echo $minYear."/";
-  echo $maxYear;
-
   
   $isInputErr = 0; //Mark Error for server checking input.
 

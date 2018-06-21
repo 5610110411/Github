@@ -2,19 +2,67 @@
 
   session_start();
 
+  $search_result = "";
+
+  if(isset($_GET['regName']))
+  {
+    $search_result = addProfile();
+  }else if(isset($_GET['deleteProfile']))
+  {
+    deleteProfile();
+  }else{
+  }
+  /*
   $action = isset($_GET['action']) ? $_GET['action'] : '';
 
+  switch ($action) {
+	
+    case 'regName' :
+      showProfile();
+      break;
+      
+    
+      
+    case 'deleteProfile' :
+      deleteProfile();
+      
+      break;
+    
+      
   
-  $regValue = $_GET['regName'];
+    default :
+        // if action is not defined or unknown
+      // move to main product page
+      echo "default";
+      //header('Location: home.php');
+  }
+  */
 
-  //echo "Your registration is: ".$regValue.".";
-  $sql = createQuery($regValue);
-	$search_result = filterTable($sql);
+  function deleteProfile()
+  {
+    $deleteProfile = $_GET['deleteProfile'];
+    $sql = createQueryForDeleteProfile($deleteProfile);
+    $search_result = filterTable($sql);
+    header('Location: home.php');
+  }
   
-  function createQuery($key)
+  function addProfile()
+  {
+    $regValue = $_GET['regName'];
+    $sql = createQueryForShowProFile($regValue);
+    $search_result = filterTable($sql);
+    return $search_result;
+  }
+  
+  function createQueryForDeleteProfile($key)
 	{
-		
-		$sql = "SELECT * FROM people WHERE VHV_No LIKE '%".$key."%'";
+		$sql = "DELETE FROM people WHERE VHV_No LIKE '$key'";
+		return $sql;
+  }
+  
+  function createQueryForShowProFile($key)
+	{
+		$sql = "SELECT * FROM people WHERE VHV_No LIKE '$key'";
 		return $sql;
 	}
 

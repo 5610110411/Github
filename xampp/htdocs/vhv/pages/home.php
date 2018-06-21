@@ -15,17 +15,14 @@
 		{ //in case 
 			$_SESSION['firstSearch'] = 0;
 			$sql = "SELECT * FROM people WHERE 1 AND VHV_No LIKE '%00000000000000%'";
-			//echo "case 1";
 		}
 		else if(isset($_SESSION['lastSQL']))
 		{
 			$sql = $_SESSION['lastSQL'];
-			//echo "case 2";
 		}
 		else
 		{
 			$sql = "SELECT * FROM people";
-			//echo "case 3";
 		}
 		//echo "sql in else = ";
 		//echo "$sql";
@@ -84,33 +81,33 @@
 		}
 
 		if(empty($IdCard) && empty($FirstName) && empty($LastName) && empty($Tumbon) && empty($IdCard) && empty($VHV_No) && empty($Moo)){
-			return "SELECT * FROM people WHERE 1 AND VHV_No LIKE '%00000000000000%'";
+			return "SELECT * FROM people WHERE 1 AND VHV_No LIKE '00000000000000'";
 		}else{
 			$sql = "SELECT * FROM people WHERE 1";
 			
 			if($IdCard && !empty($IdCard))
 			{
-				$sql .= " AND IdCard LIKE '%".$IdCard."%'";
+				$sql .= " AND IdCard LIKE '$IdCard'";
 			}
 			if($FirstName && !empty($FirstName))
 			{
-				$sql .= " AND FirstName LIKE '%".$FirstName."%'";
+				$sql .= " AND FirstName LIKE '$FirstName'";
 			}
 			if($LastName && !empty($LastName))
 			{
-				$sql .= " AND LastName LIKE '%".$LastName."%'";
+				$sql .= " AND LastName LIKE '$LastName'";
 			}
 			if($Tumbon && !empty($Tumbon))
 			{
-				$sql .= " AND Tumbon LIKE '%".$Tumbon."%'";
+				$sql .= " AND Tumbon LIKE '$Tumbon'";
 			}
 			if($VHV_No && !empty($VHV_No))
 			{
-				$sql .= " AND VHV_No LIKE '%".$VHV_No."%'";
+				$sql .= " AND VHV_No LIKE '$VHV_No'";
 			}
 			if($Moo && !empty($Moo))
 			{
-				$sql .= " AND Moo LIKE '%".$Moo."%'";
+				$sql .= " AND Moo LIKE '$Moo'";
 			}
 		}
 		$_SESSION['lastSQL'] = $sql;
@@ -158,11 +155,15 @@ if(!isset($_SESSION['ses_id'])){
 
 	h1
 	{
-	color: #99CC00;
-	margin: 0px 0px 20px;
-	padding: 20px 0px 10px;
-	font: bold 30px Verdana, Arial, Helvetica, sans-serif;
-	border-bottom: 1px dashed #E6E8ED;
+		color: #99CC00;
+		margin: 0px 0px 20px;
+		padding: 20px 0px 10px;
+		font: bold 30px Verdana, Arial, Helvetica, sans-serif;
+		border-bottom: 1px dashed #E6E8ED;
+	}
+
+	th{
+		text-align: center;
 	}
 
 	.centered-form .panel
@@ -184,6 +185,11 @@ body{
 </style>
 
 <script>
+	var el = document.getElementById('myCoolForm');
+
+	el.addEventListener('submit', function(){
+		return confirm('Are you sure you want to submit this form?');
+	}, false);
 </script>
 
 </head>
@@ -199,21 +205,6 @@ body{
 
 <!--  =================== Top bar============================================   -->
 <?php include('topbar.php'); ?>
-<!--nav class="navbar navbar-default">
-  <div class="container">
-    <div class="navbar-header">
-      <a class="navbar-brand" href="http://www.kohsamuicity.go.th/frontpage">เทศบาลนครเกาะสมุย</a>
-    </div>
-    <ul class="nav navbar-nav">
-      <li class="active"><a href="http://www.kohsamuicity.go.th/frontpage">หน้าหลัก</a></li>
-      <li><a href="#">ระบบ GIS อสม.</a></li>
-    </ul>
-    <ul class="nav navbar-nav navbar-right">
-      <!--li><a href="#"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li-->
-      <!--li><a href="logout.php"><span class="glyphicon glyphicon-log-in"></span> ออกจากระบบ</a></li>
-    </ul>
-  </div>
-</nav-->
 
 	<div class="container">
 		<h1 align="center">ระบบสารสนเทศภูมิศาสตร์ อสม. อำเภอเกาะสมุย</h1>
@@ -309,22 +300,24 @@ body{
 							<tr>
 								<th><?php echo 'เลขที่บัตร อสม.';?></th>
 								<th><?php echo 'คำนำหน้า';?></th>
-								<th><?php echo 'ชื่อ';?></th>
-								<th><?php echo 'นามสกุล';?></th>
+								<th style="text-align: left"><?php echo 'ชื่อ';?></th>
+								<th style="text-align: left"><?php echo 'นามสกุล';?></th>
 								<th><?php echo 'ตำบล';?></th>
 								<th><?php echo 'หมู่';?></th>
-								<th><?php echo 'ข้อมูลเพิ่มเติม';?></th>
+								<th><?php echo 'ข้อมูลเพิ่มเติม';?></td>
 							</tr>
 							<?php while($row = mysqli_fetch_array($search_result)):?>			
 								<tr>
-									<td><?php echo $row['VHV_No'];?></td>
-									<td><?php echo $row['Title'];?></td>
+									<td align="center"><?php echo $row['VHV_No'];?></td>
+									<td align="center"><?php echo $row['Title'];?></td>
 									<td><?php echo $row['FirstName'];?></td>
 									<td><?php echo $row['LastName'];?></td>
-									<td><?php echo $row['Tumbon'];?></td>
-									<td><?php echo $row['Moo'];?></td>
-									<td>
-										<button data-id="p<?php echo $row['VHV_No'];?>" class="btn btn-default" type="submit" name="regName" value="<?php echo $row['VHV_No'];?>">รายละเอียด</button>
+									<td align="center"><?php echo $row['Tumbon'];?></td>
+									<td align="center"><?php echo $row['Moo'];?></td>
+									<td align="center">
+										<button class="btn btn-info" type="submit" name="regName" value="<?php echo $row['VHV_No'];?>"><span class="glyphicon glyphicon-zoom-in"> รายละเอียด</button>
+										<button class="btn btn-warning" type="submit" name="editProfile" value="<?php echo $row['VHV_No'];?>"><span class="glyphicon glyphicon glyphicon-pencil"> แก้ไข</button>
+										<button class="btn btn-danger" type="submit" name="deleteProfile" value="<?php echo $row['VHV_No'];?>" onclick='return window.confirm("คุณยืนยันที่จะลบข้อมูลใช่หรือไม่?");'><span class="glyphicon glyphicon-trash"> ลบ</button>
 									</td>
 								</tr>
 							<?php endwhile;?>
@@ -375,7 +368,7 @@ body{
 							lat: lat[count],
 							lng: long[count]
 						},
-						content: '<h1>' + firstname[count] + ' ' + lastname[count] + '</h1>'
+						content: '<h1><a href="profile.php?regName=' + person[count] + '">' + firstname[count] + ' ' + lastname[count] + '</a></h1>'
 					};
 				}
 				//console.log(markers);
