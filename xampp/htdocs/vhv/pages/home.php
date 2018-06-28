@@ -135,7 +135,8 @@ if(!isset($_SESSION['ses_id'])){
 <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <style>
 	
 	#map
@@ -178,10 +179,38 @@ if(!isset($_SESSION['ses_id'])){
 		color: #808B96;
 	}
 
-body{
-	font-size:18px;
-}
+	body{
+		font-size:18px;
+	}
+	/*
+	.navbar-inverse{
+		color: #99CC00;
+	}
+	*/
+
+	.navbar-inverse {
+    	background-color: #2196f3;
+    	border-color: #2196f3;
+	}
+
+	.navbar-inverse .navbar-nav>li>a {
+    	color: #fff;
+	}
+
+	.navbar-inverse .navbar-brand {
+    	color: #fff;
+	}
+	table { 
+    	table-layout:fixed;
+	}
+	td { 
+		overflow: hidden; 
+		text-overflow: ellipsis; 
+		word-wrap: break-word;
+	}
 	
+}
+
 </style>
 
 <script>
@@ -190,6 +219,7 @@ body{
 	el.addEventListener('submit', function(){
 		return confirm('Are you sure you want to submit this form?');
 	}, false);
+
 </script>
 
 </head>
@@ -283,8 +313,7 @@ body{
 			</form>
 
 			<form method="get" action="../pages/profile.php">
-				
-					<?php 
+				<?php 
 						if(mysqli_num_rows($search_result) == 0 && mysqli_num_rows($search_resultForMap) == 0 && $_SESSION['firstSearch'] == 0)
 						{
 							echo '<div class="col-xs-12 col-sm-8 col-md-4 col-sm-offset-2 col-md-offset-5">- กรุณากรอกข้อมูลเพื่อค้นหา -</div>';
@@ -302,8 +331,8 @@ body{
 								<th><?php echo 'คำนำหน้า';?></th>
 								<th style="text-align: left"><?php echo 'ชื่อ';?></th>
 								<th style="text-align: left"><?php echo 'นามสกุล';?></th>
-								<th><?php echo 'ตำบล';?></th>
-								<th><?php echo 'หมู่';?></th>
+								<!--th><?php //echo 'ตำบล';?></th>
+								<th><?php //echo 'หมู่';?></th-->
 								<th><?php echo 'ข้อมูลเพิ่มเติม';?></td>
 							</tr>
 							<?php while($row = mysqli_fetch_array($search_result)):?>			
@@ -312,12 +341,12 @@ body{
 									<td align="center"><?php echo $row['Title'];?></td>
 									<td><?php echo $row['FirstName'];?></td>
 									<td><?php echo $row['LastName'];?></td>
-									<td align="center"><?php echo $row['Tumbon'];?></td>
-									<td align="center"><?php echo $row['Moo'];?></td>
+									<!--td align="center"><?php //echo $row['Tumbon'];?></td>
+									<td align="center"><?php //echo $row['Moo'];?></td-->
 									<td align="center">
-										<button class="btn btn-info" type="submit" name="regName" value="<?php echo $row['VHV_No'];?>"><span class="glyphicon glyphicon-zoom-in"> รายละเอียด</button>
-										<button class="btn btn-warning" type="submit" name="editProfile" value="<?php echo $row['VHV_No'];?>"><span class="glyphicon glyphicon glyphicon-pencil"> แก้ไข</button>
-										<button class="btn btn-danger" type="submit" name="deleteProfile" value="<?php echo $row['VHV_No'];?>" onclick='return window.confirm("คุณยืนยันที่จะลบข้อมูลใช่หรือไม่?");'><span class="glyphicon glyphicon-trash"> ลบ</button>
+										<button class="btn btn-info" type="submit" name="regName" value="<?php echo $row['VHV_No'];?>" data-toggle="tooltip" data-placement="top" title="รายละเอียด"><span class="glyphicon glyphicon-zoom-in"></button>
+										<button class="btn btn-warning" type="submit" name="editProfile" value="<?php echo $row['VHV_No'];?>" data-toggle="tooltip" data-placement="top" title="แก้ไข"><span class="glyphicon glyphicon glyphicon-edit"></button>
+										<button class="btn btn-danger" type="submit" name="deleteProfile" value="<?php echo $row['VHV_No'];?>" onclick='return window.confirm("คุณยืนยันที่จะลบข้อมูลใช่หรือไม่?");' data-toggle="tooltip" data-placement="top" title="ลบ"><span class="glyphicon glyphicon-trash"></button>
 									</td>
 								</tr>
 							<?php endwhile;?>
@@ -335,12 +364,11 @@ body{
 							</script>
 						<?php endwhile;?>
 
-				<div align="center">
+				<ul align="center" class="pagination">
 					<?php
 						page_echo_pagenums(6, true);
 					?>
-				</div>
-				
+				</ul>
 				<div>
 					<div id="map"></div>
 				</div>
@@ -448,6 +476,11 @@ body{
 		<br>
 		<?php include('footer.php');?>
 	</div>
+	<script>
+		$(document).ready(function(){
+			$('[data-toggle="tooltip"]').tooltip();   
+		});
+	</script>
 </body>
 </html>
 <?php

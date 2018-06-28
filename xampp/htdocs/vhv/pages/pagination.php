@@ -187,10 +187,12 @@ function _page_element($e,$p,$t,$q="") {
 	}
 	
 	if($e=="a") {
-		return "<a href=\"{$_SERVER['PHP_SELF']}?$q\" class=\"page-$_rand\">$t</a>";
+		//return "<a href=\"{$_SERVER['PHP_SELF']}?$q\" class=\"page-$_rand\">$t</a>";
+		return "<li><a href=\"{$_SERVER['PHP_SELF']}?$q\" class=\"page-$_rand\">$t</a><li>";
 	}
 	else if($e=="span") {
-		return "<span class=\"page-$_rand\">$t</span>";
+		//return "<span class=\"page-$_rand\">$t</span>";
+		return "<li><span class=\"page-$_rand\">$t</span><li>";
 	}
 }
 
