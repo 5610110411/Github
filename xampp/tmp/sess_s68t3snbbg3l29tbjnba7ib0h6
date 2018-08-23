@@ -1,0 +1,1 @@
+ses_id|s:26:"s68t3snbbg3l29tbjnba7ib0h6";email|s:20:"nine.exe@hotmail.com";status|i:1;firstSearch|i:1;lastSQL|s:85:"SELECT * FROM patient WHERE 1 AND Status LIKE 'valid' AND IdCard LIKE '6666666666666'";
